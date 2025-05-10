@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -44,11 +47,23 @@ fun MyApp(modifier: Modifier) {
     val navController = rememberNavController()
     MaterialTheme {
         NavHost(navController = navController, startDestination = "main") {
-            composable("main") {
-                MainPage(modifier,navController)
+            composable(
+                "main",
+                popEnterTransition = { EnterTransition.None }, // No animation when popping back
+                popExitTransition = { ExitTransition.None }) {
+                MainPage(modifier, viewModel, navController)
             }
-            composable("detail") {
-               TestingPage(modifier)
+            composable(
+                "detail/{categoryID}",
+                popEnterTransition = { EnterTransition.None }, // No animation when popping back
+                popExitTransition = { ExitTransition.None }) { backStackEntry ->
+                // Extract categoryID as a String
+                val categoryID = backStackEntry.arguments?.getString("categoryID")
+                viewModel.selectedCategoryId = categoryID
+                println("idgiven $categoryID")
+                DetailPage(modifier, viewModel, navController)
+
+
             }
         }
     }
