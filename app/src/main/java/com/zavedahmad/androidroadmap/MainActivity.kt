@@ -49,14 +49,15 @@ fun MyApp(modifier: Modifier) {
         NavHost(navController = navController, startDestination = "main") {
             composable(
                 "main",
-                popEnterTransition = { EnterTransition.None }, // No animation when popping back
-                popExitTransition = { ExitTransition.None }) {
+
+                popEnterTransition = { null }, // No animation when popping back
+                popExitTransition = {null}) {
                 MainPage(modifier, viewModel, navController)
             }
             composable(
                 "detail/{categoryID}",
-                popEnterTransition = { EnterTransition.None }, // No animation when popping back
-                popExitTransition = { ExitTransition.None }) { backStackEntry ->
+                popEnterTransition = { null }, // No animation when popping back
+                popExitTransition = { null }) { backStackEntry ->
                 // Extract categoryID as a String
                 val categoryID = backStackEntry.arguments?.getString("categoryID")
                 viewModel.selectedCategoryId = categoryID
