@@ -1,6 +1,7 @@
 package com.zavedahmad.androidroadmap.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -47,15 +49,25 @@ fun DetailPage(modifier: Modifier, viewModel: AppViewModel, navHostController: N
     ) { innerPadding ->
 
 
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .padding(10.dp)) {
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(10.dp)
+        ) {
             if (category?.info != null && category?.subItems?.size == 0) {
                 Text(category?.info ?: "hi")
 
                 if (category?.links != null) {
+                    val uriHandler = LocalUriHandler.current
                     for (x in category.links) {
-                        Text(x.item, style = TextStyle(color = MaterialTheme.colorScheme.primary, textDecoration = TextDecoration.Underline))
+                        Text(
+                            x.item,
+                            modifier = Modifier.clickable { uriHandler.openUri(x.link) },
+                            style = TextStyle(
+                                color = MaterialTheme.colorScheme.primary,
+                                textDecoration = TextDecoration.Underline
+                            )
+                        )
                     }
                 }
             }
