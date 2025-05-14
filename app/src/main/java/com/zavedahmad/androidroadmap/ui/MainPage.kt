@@ -33,16 +33,11 @@ fun MainPage(modifier: Modifier, viewModel: AppViewModel, navHostController: Nav
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { MyTopAppBar(scrollBehavior) }) { innerpadding ->
+        topBar = { MyTopAppBar(scrollBehavior,"Android Roadmap") }) { innerpadding ->
         MyScreenContent(Modifier.padding(innerpadding), viewModel, navHostController)
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyTopAppBar(scrollBehavior: TopAppBarScrollBehavior) {
-    TopAppBar(title = { Text("Android Developer RoadMap", fontSize = 25.sp) }, scrollBehavior = scrollBehavior)
-}
 
 @Composable
 fun MyScreenContent(
