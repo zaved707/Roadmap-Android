@@ -25,7 +25,6 @@ import com.zavedahmad.androidroadmap.data.AppViewModel
 import com.zavedahmad.androidroadmap.data.Category
 import com.zavedahmad.androidroadmap.ui.DetailPage
 import com.zavedahmad.androidroadmap.ui.MainPage
-import com.zavedahmad.androidroadmap.ui.TestingPage
 
 import com.zavedahmad.androidroadmap.ui.theme.AndroidRoadMapTheme
 

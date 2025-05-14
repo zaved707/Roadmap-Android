@@ -17,6 +17,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.zavedahmad.androidroadmap.data.AppViewModel
@@ -35,7 +36,7 @@ fun DetailPage(modifier: Modifier, viewModel: AppViewModel, navHostController: N
 
         navHostController.popBackStack() // Go to previous screen
     }
-    Scaffold(topBar = {MyTopAppBar(scrollBehavior,category?.name ?: "null category" )}) {innerPadding ->
+    Scaffold(topBar = {MyTopAppBar(scrollBehavior,category?.name ?: "null category" )},modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) {innerPadding ->
 
 
             Column (modifier = Modifier.padding(innerPadding)){
