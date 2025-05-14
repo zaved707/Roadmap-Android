@@ -6,6 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -49,15 +52,22 @@ fun MyApp(modifier: Modifier) {
         NavHost(navController = navController, startDestination = "main") {
             composable(
                 "main",
-
-                popEnterTransition = { null }, // No animation when popping back
-                popExitTransition = {null}) {
+                popEnterTransition = { EnterTransition.None }, // No animation when popping back
+                popExitTransition = { ExitTransition.None }) {
                 MainPage(modifier, viewModel, navController)
             }
             composable(
                 "detail/{categoryID}",
-                popEnterTransition = { null }, // No animation when popping back
-                popExitTransition = { null }) { backStackEntry ->
+                enterTransition = {
+                    slideInHorizontally(
+                        initialOffsetX = { fullWidth -> fullWidth }, // Slide in from the right
+                        animationSpec = tween(300) // 300ms duration
+                    )
+                },
+
+                popEnterTransition = { EnterTransition.None }, // No animation when popping back
+                popExitTransition = { ExitTransition.None }
+            ) { backStackEntry ->
                 // Extract categoryID as a String
                 val categoryID = backStackEntry.arguments?.getString("categoryID")
                 viewModel.selectedCategoryId = categoryID
